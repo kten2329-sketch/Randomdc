@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>CHANGE ĐỊA CHỈ - Random Ký Tự</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f2f5;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 35px 40px;
+            max-width: 820px;
+            width: 100%;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e8ecf1;
+        }
+
+        h1 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1a2332;
+            margin-bottom: 2px;
+        }
+
+        .sub {
+            color: #6b7a8f;
+            font-size: 14px;
+            margin-bottom: 22px;
+        }
+
+        .sub strong {
+            color: #1a2332;
+        }
+
+        .date-version {
+            color: #8e44ad;
+            font-size: 13px;
+            font-weight: 500;
+            margin-left: 10px;
+        }
+
+        .input-row {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 22px;
+            flex-wrap: wrap;
+        }
+
+        .input-row input {
+            flex: 1;
+            min-width: 160px;
+            padding: 13px 18px;
+            border-radius: 10px;
+            border: 1.5px solid #d0d7e2;
+            font-size: 16px;
+            background: #fafbfc;
+            transition: 0.2s;
+            outline: none;
+            color: #1a2332;
+        }
+
+        .input-row input:focus {
+            border-color: #4a6cf7;
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(74, 108, 247, 0.08);
+        }
+
+        .input-row input::placeholder {
+            color: #a8b5c7;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            padding: 13px 20px;
+            border: none;
+            border-radius: 10px;
+            background: #4a6cf7;
+            color: #fff;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.2s;
+            white-space: nowrap;
+        }
+
+        .btn-primary:hover {
+            background: #3a5de0;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(74, 108, 247, 0.25);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-random2 {
+            background: #e67e22;
+        }
+
+        .btn-random2:hover {
+            background: #d35400;
+            box-shadow: 0 6px 20px rgba(230, 126, 34, 0.25);
+        }
+
+        .btn-random1 {
+            background: #27ae60;
+        }
+
+        .btn-random1:hover {
+            background: #1e8449;
+            box-shadow: 0 6px 20px rgba(39, 174, 96, 0.25);
+        }
+
+        .btn-switch {
+            background: #8e44ad;
+        }
+
+        .btn-switch:hover {
+            background: #6c3483;
+            box-shadow: 0 6px 20px rgba(142, 68, 173, 0.25);
+        }
+
+        .btn-clear {
+            background: #e74c3c;
+        }
+
+        .btn-clear:hover {
+            background: #c0392b;
+            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.25);
+        }
+
+        .result-box {
+            background: #f8f9fb;
+            border-radius: 12px;
+            padding: 18px 22px;
+            border: 1.5px solid #e8ecf1;
+            min-height: 65px;
+        }
+
+        .result-box .label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #6b7a8f;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 10px;
+        }
+
+        .result-box .output {
+            font-size: 24px;
+            font-weight: 500;
+            color: #1a2332;
+            letter-spacing: 0.3px;
+            word-break: break-word;
+            line-height: 1.7;
+        }
+
+        .result-box .output .word-wrap {
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .result-box .output .empty-text {
+            color: #a8b5c7;
+            font-weight: 400;
+        }
+
+        .result-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 12px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .copy-btn {
+            background: #ffffff;
+            border: 1.5px solid #d0d7e2;
+            border-radius: 8px;
+            padding: 7px 18px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #4a5a72;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .copy-btn:hover {
+            background: #f0f2f5;
+            border-color: #b0bccd;
+        }
+
+        .copy-btn.copied {
+            background: #e3f5e9;
+            border-color: #2e9b5e;
+            color: #1a7a44;
+        }
+
+        .copy-btn svg {
+            width: 17px;
+            height: 17px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2.2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .stats {
+            display: flex;
+            gap: 20px;
+            font-size: 14px;
+            color: #6b7a8f;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .stats span {
+            background: #f0f2f5;
+            padding: 3px 16px;
+            border-radius: 30px;
+        }
+
+        .stats .safe-badge {
+            background: #e3f5e9;
+            color: #1a7a44;
+            font-weight: 500;
+        }
+
+        .footer {
+            margin-top: 18px;
+            font-size: 13px;
+            color: #a8b5c7;
+            text-align: center;
+        }
+
+        .footer strong {
+            color: #6b7a8f;
+        }
+
+        .current-label {
+            font-size: 12px;
+            color: #8e44ad;
+            margin-top: 6px;
+            font-weight: 500;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px 16px;
+            }
+            .input-row input {
+                font-size: 15px;
+                padding: 12px 14px;
+            }
+            .btn-group {
+                width: 100%;
+            }
+            .btn-primary {
+                flex: 1;
+                justify-content: center;
+                text-align: center;
+                min-width: 60px;
+                font-size: 12px;
+                padding: 12px 8px;
+            }
+            .result-box .output {
+                font-size: 20px;
+            }
+            .result-box {
+                padding: 14px 16px;
+            }
+            .result-footer {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .copy-btn {
+                justify-content: center;
+            }
+            .stats {
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>
+        🔤 CHANGE ĐỊA CHỈ
+        <span class="date-version">📅 27/6/2026</span>
+    </h1>
+    <div class="sub">Thêm ngẫu nhiên chữ cái trước &amp; sau mỗi từ · <strong>đảm bảo khác nhau 100%</strong></div>
+
+    <div class="input-row">
+        <input type="text" id="inputText" placeholder="Nhập câu của bạn..." value="THỊ TRẤN THỨ MƯỜI MỘT" />
+        <div class="btn-group">
+            <button class="btn-primary btn-switch" id="switchBtn">📍 CHANGE ĐỊA CHỈ</button>
+            <button class="btn-primary btn-random1" id="random1Btn">🔹 Random 1</button>
+            <button class="btn-primary btn-random2" id="random2Btn">🔸 Random 2</button>
+            <button class="btn-primary btn-clear" id="clearBtn">🗑️ Xoá</button>
+        </div>
+    </div>
+
+    <div class="result-box">
+        <div class="label" id="modeLabel">KẾT QUẢ · MODE 1 (1 KÝ TỰ)</div>
+        <div class="output" id="outputDisplay">
+            <span class="word-wrap">tTHỊk</span>
+            <span class="word-wrap">rTRẦNq</span>
+            <span class="word-wrap">hTHỨk</span>
+            <span class="word-wrap">bMƯỜIc</span>
+            <span class="word-wrap">gMỘTt</span>
+        </div>
+
+        <div class="result-footer">
+            <div class="stats">
+                <span id="charCount">Ký tự: 27</span>
+                <span id="wordCount">Từ: 5</span>
+                <span class="safe-badge">✅ Trước ≠ sau</span>
+            </div>
+            <button class="copy-btn" id="copyBtn">
+                <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                Copy
+            </button>
+        </div>
+    </div>
+
+    <div class="footer">
+        <span class="current-label" id="currentStatus">📍 Đang dùng: THỊ TRẤN THỨ MƯỜI MỘT</span>
+        <br>
+        mỗi lần bấm · tổ hợp mới · <strong>không bao giờ trùng</strong> trong cùng từ
+    </div>
+</div>
+
+<script>
+    (function() {
+        const inputField = document.getElementById('inputText');
+        const outputDiv = document.getElementById('outputDisplay');
+        const random1Btn = document.getElementById('random1Btn');
+        const random2Btn = document.getElementById('random2Btn');
+        const switchBtn = document.getElementById('switchBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const copyBtn = document.getElementById('copyBtn');
+        const charSpan = document.getElementById('charCount');
+        const wordSpan = document.getElementById('wordCount');
+        const modeLabel = document.getElementById('modeLabel');
+        const currentStatus = document.getElementById('currentStatus');
+
+        const SENTENCE_1 = 'THI TRAN THU MUOI MOT';
+        const SENTENCE_2 = 'CUA HANG GIA DUNG HOAN VU KE TAP HOA MINH THU';
+
+        let isSentence1 = true;
+        let currentRawText = '';
+        let currentProcessedText = '';
+
+        const ALPHABET = 'abcdefghijklmnopqrstuvwxyz';
+
+        function randomLetter() {
+            return ALPHABET[Math.floor(Math.random() * ALPHABET.length)];
+        }
+
+        function getRandomLetters(count) {
+            let result = '';
+            for (let i = 0; i < count; i++) {
+                result += randomLetter();
+            }
+            return result;
+        }
+
+        function getDifferentPrefixSuffix(count) {
+            let prefix, suffix;
+            let attempts = 0;
+            do {
+                prefix = getRandomLetters(count);
+                suffix = getRandomLetters(count);
+                attempts++;
+                if (attempts > 100) {
+                    const lastIdx = count - 1;
+                    const prefixLast = prefix[lastIdx];
+                    let newChar = randomLetter();
+                    while (newChar === prefixLast) {
+                        newChar = randomLetter();
+                    }
+                    suffix = suffix.substring(0, lastIdx) + newChar;
+                    break;
+                }
+            } while (prefix === suffix);
+            return { prefix, suffix };
+        }
+
+        function processText(text, charCount) {
+            if (!text || text.trim() === '') {
+                return { result: '', details: [] };
+            }
+
+            const words = text.split(/\s+/);
+            const resultParts = [];
+            const details = [];
+
+            for (let word of words) {
+                if (word.length === 0) {
+                    resultParts.push('');
+                    details.push({ word: '', prefix: '', suffix: '' });
+                    continue;
+                }
+
+                const { prefix, suffix } = getDifferentPrefixSuffix(charCount);
+                const wrapped = prefix + word + suffix;
+                resultParts.push(wrapped);
+                details.push({ word, prefix, suffix });
+            }
+
+            return {
+                result: resultParts.join(' '),
+                details: details
+            };
+        }
+
+        function updateStats(raw, processed) {
+            const charCount = processed.replace(/\s/g, '').length;
+            charSpan.textContent = `Ký tự: ${charCount}`;
+
+            const wordCount = raw.trim() === '' ? 0 : raw.trim().split(/\s+/).length;
+            wordSpan.textContent = `Từ: ${wordCount}`;
+        }
+
+        function renderOutput(processed) {
+            if (!processed || processed === '') {
+                outputDiv.innerHTML = '<span class="empty-text">📭 Chưa có dữ liệu</span>';
+                currentProcessedText = '';
+                return;
+            }
+
+            const parts = processed.split(' ');
+            let html = '';
+            for (let part of parts) {
+                if (part === '') continue;
+                html += `<span class="word-wrap">${part}</span>`;
+            }
+            outputDiv.innerHTML = html.trim();
+            currentProcessedText = processed; // Lưu text gốc có khoảng cách
+        }
+
+        function generate(mode) {
+            const raw = inputField.value;
+            currentRawText = raw;
+
+            if (!raw || raw.trim() === '') {
+                renderOutput('');
+                updateStats('', '');
+                modeLabel.textContent = 'KẾT QUẢ · TRỐNG';
+                modeLabel.style.color = '#e74c3c';
+                copyBtn.classList.remove('copied');
+                copyBtn.innerHTML = `
+                    <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                    Copy
+                `;
+                return;
+            }
+
+            const charCount = mode === 1 ? 1 : 2;
+            const { result } = processText(raw, charCount);
+            renderOutput(result);
+            updateStats(raw, result);
+
+            if (mode === 1) {
+                modeLabel.textContent = 'KẾT QUẢ · MODE 1 (1 KÝ TỰ)';
+                modeLabel.style.color = '#27ae60';
+            } else {
+                modeLabel.textContent = 'KẾT QUẢ · MODE 2 (2 KÝ TỰ)';
+                modeLabel.style.color = '#e67e22';
+            }
+
+            copyBtn.classList.remove('copied');
+            copyBtn.innerHTML = `
+                <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                Copy
+            `;
+        }
+
+        function switchAddress() {
+            if (isSentence1) {
+                inputField.value = SENTENCE_2;
+                currentStatus.textContent = '📍 Đang dùng: CỬA HÀNG GIA DỤNG HOÀN VŨ KẾ TẠP HOÁ MINH THƯ';
+            } else {
+                inputField.value = SENTENCE_1;
+                currentStatus.textContent = '📍 Đang dùng: THỊ TRẤN THỨ MƯỜI MỘT';
+            }
+            isSentence1 = !isSentence1;
+            generate(1);
+        }
+
+        function clearAll() {
+            inputField.value = '';
+            renderOutput('');
+            updateStats('', '');
+            modeLabel.textContent = 'KẾT QUẢ · TRỐNG';
+            modeLabel.style.color = '#e74c3c';
+            currentStatus.textContent = '📍 Chưa có dữ liệu';
+            currentProcessedText = '';
+            copyBtn.classList.remove('copied');
+            copyBtn.innerHTML = `
+                <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                Copy
+            `;
+        }
+
+        random1Btn.addEventListener('click', () => generate(1));
+        random2Btn.addEventListener('click', () => generate(2));
+        switchBtn.addEventListener('click', switchAddress);
+        clearBtn.addEventListener('click', clearAll);
+
+        inputField.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                generate(1);
+            }
+        });
+
+        // Nút Copy - copy đúng định dạng có khoảng cách
+        copyBtn.addEventListener('click', function() {
+            // Lấy text từ biến đã lưu - đảm bảo có khoảng cách
+            let textToCopy = currentProcessedText;
+            
+            // Fallback: nếu biến rỗng, lấy từ DOM
+            if (!textToCopy || textToCopy.trim() === '') {
+                // Lấy text từ DOM nhưng đảm bảo có khoảng cách
+                const wordSpans = outputDiv.querySelectorAll('.word-wrap');
+                if (wordSpans.length > 0) {
+                    const words = [];
+                    wordSpans.forEach(span => {
+                        words.push(span.textContent);
+                    });
+                    textToCopy = words.join(' ');
+                } else {
+                    textToCopy = outputDiv.textContent.trim();
+                }
+            }
+
+            if (!textToCopy || textToCopy === '📭 Chưa có dữ liệu') {
+                alert('Không có gì để copy!');
+                return;
+            }
+
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                this.classList.add('copied');
+                this.innerHTML = `
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                    Đã copy!
+                `;
+                setTimeout(() => {
+                    this.classList.remove('copied');
+                    this.innerHTML = `
+                        <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        Copy
+                    `;
+                }, 2500);
+            }).catch(() => {
+                const textArea = document.createElement('textarea');
+                textArea.value = textToCopy;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+
+                this.classList.add('copied');
+                this.innerHTML = `<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Đã copy!`;
+                setTimeout(() => {
+                    this.classList.remove('copied');
+                    this.innerHTML = `
+                        <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        Copy
+                    `;
+                }, 2500);
+            });
+        });
+
+        generate(1);
+    })();
+</script>
+
+</body>
+</html>            border: 1.5px solid #d0d7e2;
+            font-size: 16px;
+            background: #fafbfc;
+            transition: 0.2s;
+            outline: none;
+            color: #1a2332;
+        }
+
+        .input-row input:focus {
+            border-color: #4a6cf7;
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(74, 108, 247, 0.08);
+        }
+
+        .input-row input::placeholder {
+            color: #a8b5c7;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            padding: 13px 20px;
+            border: none;
+            border-radius: 10px;
+            background: #4a6cf7;
+            color: #fff;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.2s;
+            white-space: nowrap;
+        }
+
+        .btn-primary:hover {
+            background: #3a5de0;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(74, 108, 247, 0.25);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-random2 {
+            background: #e67e22;
+        }
+
+        .btn-random2:hover {
+            background: #d35400;
+            box-shadow: 0 6px 20px rgba(230, 126, 34, 0.25);
+        }
+
+        .btn-random1 {
+            background: #27ae60;
+        }
+
+        .btn-random1:hover {
+            background: #1e8449;
+            box-shadow: 0 6px 20px rgba(39, 174, 96, 0.25);
+        }
+
+        .btn-switch {
+            background: #8e44ad;
+        }
+
+        .btn-switch:hover {
+            background: #6c3483;
+            box-shadow: 0 6px 20px rgba(142, 68, 173, 0.25);
+        }
+
+        .btn-clear {
+            background: #e74c3c;
+        }
+
+        .btn-clear:hover {
+            background: #c0392b;
+            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.25);
+        }
+
+        .result-box {
+            background: #f8f9fb;
+            border-radius: 12px;
+            padding: 18px 22px;
+            border: 1.5px solid #e8ecf1;
+            min-height: 65px;
+        }
+
+        .result-box .label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #6b7a8f;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 10px;
+        }
+
+        .result-box .output {
+            font-size: 24px;
+            font-weight: 500;
+            color: #1a2332;
+            letter-spacing: 0.3px;
+            word-break: break-word;
+            line-height: 1.7;
+        }
+
+        .result-box .output .word-wrap {
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .result-box .output .empty-text {
+            color: #a8b5c7;
+            font-weight: 400;
+        }
+
+        .result-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 12px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .copy-btn {
+            background: #ffffff;
+            border: 1.5px solid #d0d7e2;
+            border-radius: 8px;
+            padding: 7px 18px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #4a5a72;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .copy-btn:hover {
+            background: #f0f2f5;
+            border-color: #b0bccd;
+        }
+
+        .copy-btn.copied {
+            background: #e3f5e9;
+            border-color: #2e9b5e;
+            color: #1a7a44;
+        }
+
+        .copy-btn svg {
+            width: 17px;
+            height: 17px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2.2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .stats {
+            display: flex;
+            gap: 20px;
+            font-size: 14px;
+            color: #6b7a8f;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .stats span {
+            background: #f0f2f5;
+            padding: 3px 16px;
+            border-radius: 30px;
+        }
+
+        .stats .safe-badge {
+            background: #e3f5e9;
+            color: #1a7a44;
+            font-weight: 500;
+        }
+
+        .footer {
+            margin-top: 18px;
+            font-size: 13px;
+            color: #a8b5c7;
+            text-align: center;
+        }
+
+        .footer strong {
+            color: #6b7a8f;
+        }
+
+        .current-label {
+            font-size: 12px;
+            color: #8e44ad;
+            margin-top: 6px;
+            font-weight: 500;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px 16px;
+            }
+            .input-row input {
+                font-size: 15px;
+                padding: 12px 14px;
+            }
+            .btn-group {
+                width: 100%;
+            }
+            .btn-primary {
+                flex: 1;
+                justify-content: center;
+                text-align: center;
+                min-width: 60px;
+                font-size: 12px;
+                padding: 12px 8px;
+            }
+            .result-box .output {
+                font-size: 20px;
+            }
+            .result-box {
+                padding: 14px 16px;
+            }
+            .result-footer {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .copy-btn {
+                justify-content: center;
+            }
+            .stats {
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>
+        🔤 CHANGE ĐỊA CHỈ
+        <span class="date-version">📅 27/6/2026</span>
+    </h1>
+    <div class="sub">Thêm ngẫu nhiên chữ cái trước &amp; sau mỗi từ · <strong>đảm bảo khác nhau 100%</strong></div>
+
+    <div class="input-row">
+        <input type="text" id="inputText" placeholder="Nhập câu của bạn..." value="THỊ TRẤN THỨ MƯỜI MỘT" />
+        <div class="btn-group">
+            <button class="btn-primary btn-switch" id="switchBtn">📍 CHANGE ĐỊA CHỈ</button>
+            <button class="btn-primary btn-random1" id="random1Btn">🔹 Random 1</button>
+            <button class="btn-primary btn-random2" id="random2Btn">🔸 Random 2</button>
+            <button class="btn-primary btn-clear" id="clearBtn">🗑️ Xoá</button>
+        </div>
+    </div>
+
+    <div class="result-box">
+        <div class="label" id="modeLabel">KẾT QUẢ · MODE 1 (1 KÝ TỰ)</div>
+        <div class="output" id="outputDisplay">
+            <span class="word-wrap">tTHỊk</span>
+            <span class="word-wrap">rTRẦNq</span>
+            <span class="word-wrap">hTHỨk</span>
+            <span class="word-wrap">bMƯỜIc</span>
+            <span class="word-wrap">gMỘTt</span>
+        </div>
+
+        <div class="result-footer">
+            <div class="stats">
+                <span id="charCount">Ký tự: 27</span>
+                <span id="wordCount">Từ: 5</span>
+                <span class="safe-badge">✅ Trước ≠ sau</span>
+            </div>
+            <button class="copy-btn" id="copyBtn">
+                <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                Copy
+            </button>
+        </div>
+    </div>
+
+    <div class="footer">
+        <span class="current-label" id="currentStatus">📍 Đang dùng: THỊ TRẤN THỨ MƯỜI MỘT</span>
+        <br>
+        mỗi lần bấm · tổ hợp mới · <strong>không bao giờ trùng</strong> trong cùng từ
+    </div>
+</div>
+
+<script>
+    (function() {
+        const inputField = document.getElementById('inputText');
+        const outputDiv = document.getElementById('outputDisplay');
+        const random1Btn = document.getElementById('random1Btn');
+        const random2Btn = document.getElementById('random2Btn');
+        const switchBtn = document.getElementById('switchBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const copyBtn = document.getElementById('copyBtn');
+        const charSpan = document.getElementById('charCount');
+        const wordSpan = document.getElementById('wordCount');
+        const modeLabel = document.getElementById('modeLabel');
+        const currentStatus = document.getElementById('currentStatus');
+
+        const SENTENCE_1 = 'THI TRAN THU MUOI MOT';
+        const SENTENCE_2 = 'CUA HANG GIA DUNG HOAN VU KE TAP HOA MINH THU';
+
+        let isSentence1 = true;
+        let currentRawText = '';
+        let currentProcessedText = '';
+
+        const ALPHABET = 'abcdefghijklmnopqrstuvwxyz';
+
+        function randomLetter() {
+            return ALPHABET[Math.floor(Math.random() * ALPHABET.length)];
+        }
+
+        function getRandomLetters(count) {
+            let result = '';
+            for (let i = 0; i < count; i++) {
+                result += randomLetter();
+            }
+            return result;
+        }
+
+        function getDifferentPrefixSuffix(count) {
+            let prefix, suffix;
+            let attempts = 0;
+            do {
+                prefix = getRandomLetters(count);
+                suffix = getRandomLetters(count);
+                attempts++;
+                if (attempts > 100) {
+                    const lastIdx = count - 1;
+                    const prefixLast = prefix[lastIdx];
+                    let newChar = randomLetter();
+                    while (newChar === prefixLast) {
+                        newChar = randomLetter();
+                    }
+                    suffix = suffix.substring(0, lastIdx) + newChar;
+                    break;
+                }
+            } while (prefix === suffix);
+            return { prefix, suffix };
+        }
+
+        function processText(text, charCount) {
+            if (!text || text.trim() === '') {
+                return { result: '', details: [] };
+            }
+
+            const words = text.split(/\s+/);
+            const resultParts = [];
+            const details = [];
+
+            for (let word of words) {
+                if (word.length === 0) {
+                    resultParts.push('');
+                    details.push({ word: '', prefix: '', suffix: '' });
+                    continue;
+                }
+
+                const { prefix, suffix } = getDifferentPrefixSuffix(charCount);
+                const wrapped = prefix + word + suffix;
+                resultParts.push(wrapped);
+                details.push({ word, prefix, suffix });
+            }
+
+            return {
+                result: resultParts.join(' '),
+                details: details
+            };
+        }
+
+        function updateStats(raw, processed) {
+            const charCount = processed.replace(/\s/g, '').length;
+            charSpan.textContent = `Ký tự: ${charCount}`;
+
+            const wordCount = raw.trim() === '' ? 0 : raw.trim().split(/\s+/).length;
+            wordSpan.textContent = `Từ: ${wordCount}`;
+        }
+
+        function renderOutput(processed) {
+            if (!processed || processed === '') {
+                outputDiv.innerHTML = '<span class="empty-text">📭 Chưa có dữ liệu</span>';
+                currentProcessedText = '';
+                return;
+            }
+
+            const parts = processed.split(' ');
+            let html = '';
+            for (let part of parts) {
+                if (part === '') continue;
+                html += `<span class="word-wrap">${part}</span>`;
+            }
+            outputDiv.innerHTML = html.trim();
+            currentProcessedText = processed; // Lưu text gốc có khoảng cách
+        }
+
+        function generate(mode) {
+            const raw = inputField.value;
+            currentRawText = raw;
+
+            if (!raw || raw.trim() === '') {
+                renderOutput('');
+                updateStats('', '');
+                modeLabel.textContent = 'KẾT QUẢ · TRỐNG';
+                modeLabel.style.color = '#e74c3c';
+                copyBtn.classList.remove('copied');
+                copyBtn.innerHTML = `
+                    <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                    Copy
+                `;
+                return;
+            }
+
+            const charCount = mode === 1 ? 1 : 2;
+            const { result } = processText(raw, charCount);
+            renderOutput(result);
+            updateStats(raw, result);
+
+            if (mode === 1) {
+                modeLabel.textContent = 'KẾT QUẢ · MODE 1 (1 KÝ TỰ)';
+                modeLabel.style.color = '#27ae60';
+            } else {
+                modeLabel.textContent = 'KẾT QUẢ · MODE 2 (2 KÝ TỰ)';
+                modeLabel.style.color = '#e67e22';
+            }
+
+            copyBtn.classList.remove('copied');
+            copyBtn.innerHTML = `
+                <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                Copy
+            `;
+        }
+
+        function switchAddress() {
+            if (isSentence1) {
+                inputField.value = SENTENCE_2;
+                currentStatus.textContent = '📍 Đang dùng: CỬA HÀNG GIA DỤNG HOÀN VŨ KẾ TẠP HOÁ MINH THƯ';
+            } else {
+                inputField.value = SENTENCE_1;
+                currentStatus.textContent = '📍 Đang dùng: THỊ TRẤN THỨ MƯỜI MỘT';
+            }
+            isSentence1 = !isSentence1;
+            generate(1);
+        }
+
+        function clearAll() {
+            inputField.value = '';
+            renderOutput('');
+            updateStats('', '');
+            modeLabel.textContent = 'KẾT QUẢ · TRỐNG';
+            modeLabel.style.color = '#e74c3c';
+            currentStatus.textContent = '📍 Chưa có dữ liệu';
+            currentProcessedText = '';
+            copyBtn.classList.remove('copied');
+            copyBtn.innerHTML = `
+                <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                Copy
+            `;
+        }
+
+        random1Btn.addEventListener('click', () => generate(1));
+        random2Btn.addEventListener('click', () => generate(2));
+        switchBtn.addEventListener('click', switchAddress);
+        clearBtn.addEventListener('click', clearAll);
+
+        inputField.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                generate(1);
+            }
+        });
+
+        // Nút Copy - copy đúng định dạng có khoảng cách
+        copyBtn.addEventListener('click', function() {
+            // Lấy text từ biến đã lưu - đảm bảo có khoảng cách
+            let textToCopy = currentProcessedText;
+            
+            // Fallback: nếu biến rỗng, lấy từ DOM
+            if (!textToCopy || textToCopy.trim() === '') {
+                // Lấy text từ DOM nhưng đảm bảo có khoảng cách
+                const wordSpans = outputDiv.querySelectorAll('.word-wrap');
+                if (wordSpans.length > 0) {
+                    const words = [];
+                    wordSpans.forEach(span => {
+                        words.push(span.textContent);
+                    });
+                    textToCopy = words.join(' ');
+                } else {
+                    textToCopy = outputDiv.textContent.trim();
+                }
+            }
+
+            if (!textToCopy || textToCopy === '📭 Chưa có dữ liệu') {
+                alert('Không có gì để copy!');
+                return;
+            }
+
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                this.classList.add('copied');
+                this.innerHTML = `
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                    Đã copy!
+                `;
+                setTimeout(() => {
+                    this.classList.remove('copied');
+                    this.innerHTML = `
+                        <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        Copy
+                    `;
+                }, 2500);
+            }).catch(() => {
+                const textArea = document.createElement('textarea');
+                textArea.value = textToCopy;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+
+                this.classList.add('copied');
+                this.innerHTML = `<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Đã copy!`;
+                setTimeout(() => {
+                    this.classList.remove('copied');
+                    this.innerHTML = `
+                        <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        Copy
+                    `;
+                }, 2500);
+            });
+        });
+
+        generate(1);
+    })();
+</script>
+
+</body>
+</html>
